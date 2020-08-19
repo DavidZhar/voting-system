@@ -1,5 +1,8 @@
 package ru.zharnitskiy.voting.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,21 +12,24 @@ import java.util.Date;
 
 @Entity
 @Table(name="votes")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Vote {
     @Id
-    protected Integer id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    protected User user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rest_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    protected Restaurant restaurant;
+    private Restaurant restaurant;
 
     @Column(name = "date", nullable = false)
     @NotNull
-    protected Date date = new Date();
+    private Date date = new Date();
 }

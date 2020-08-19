@@ -1,5 +1,8 @@
 package ru.zharnitskiy.voting.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
@@ -10,16 +13,19 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    protected Integer id;
+    private Integer id;
 
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
-    protected String name;
+    private String name;
 
     @Column(name = "email", nullable = false, unique = true)
     @Email

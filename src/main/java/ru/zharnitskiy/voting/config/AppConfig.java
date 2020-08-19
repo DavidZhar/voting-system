@@ -6,7 +6,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("ru.zharnitskiy.voting")
 public class AppConfig {
-
-
 }
 

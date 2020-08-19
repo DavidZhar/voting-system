@@ -1,7 +1,6 @@
 package ru.zharnitskiy.voting.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
@@ -14,22 +13,22 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/profile")
-    public User get() {
-        return userRepository.getOne(AuthService.getAuthId());
+    @GetMapping("/users/{id}")
+    public User get(@PathVariable int id) {
+        return userRepository.findById(id).orElse(null);
     }
 
-    @PutMapping("/profile")
-    public void update(@RequestBody User user) {
+    @PutMapping("/users/{id}")
+    public void update(@RequestBody User user, @PathVariable int id) {
         userRepository.save(user);
     }
 
-    @DeleteMapping("/profile")
-    public void delete() {
-        userRepository.deleteById(AuthService.getAuthId());
+    @DeleteMapping("/users/{id}")
+    public void delete(@PathVariable int id) {
+        userRepository.deleteById(id);
     }
 
-    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/users")
     public void create(@RequestBody User user) {
         System.out.println(user.toString());
         userRepository.save(user);

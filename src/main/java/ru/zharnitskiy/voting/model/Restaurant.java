@@ -1,5 +1,9 @@
 package ru.zharnitskiy.voting.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,12 +13,15 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="restaurants")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Restaurant {
     @Id
-    protected Integer id;
+    private Integer id;
 
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "description", nullable = false)
-    protected String description;
+    private String description;
 }
