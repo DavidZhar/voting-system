@@ -12,9 +12,6 @@ import java.util.Date;
 
 @Entity
 @Table(name="votes")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Vote {
     @Id
     private Integer id;
@@ -32,4 +29,35 @@ public class Vote {
     @Column(name = "date", nullable = false)
     @NotNull
     private Date date = new Date();
+
+    public Vote() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

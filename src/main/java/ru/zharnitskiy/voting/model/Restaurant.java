@@ -13,9 +13,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="restaurants")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Restaurant {
     @Id
     private Integer id;
@@ -24,4 +21,19 @@ public class Restaurant {
     @Size(min = 2, max = 100)
     @Column(name = "description", nullable = false)
     private String description;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Restaurant() {
+    }
 }

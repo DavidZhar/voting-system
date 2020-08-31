@@ -14,9 +14,6 @@ import java.util.Date;
 
 @Entity
 @Table(name="dishes")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Dish {
     @Id
     private Integer id;
@@ -34,4 +31,35 @@ public class Dish {
     @Column(name = "date", nullable = false)
     @NotNull
     private Date date = new Date();
+
+    public Dish() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

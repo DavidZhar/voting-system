@@ -8,31 +8,32 @@ import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import java.util.List;
 
 @RestController
+@RequestMapping("/restaurants")
 public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @GetMapping("/restaurants/{id}")
+    @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
         return restaurantRepository.getOne(id);
     }
 
-    @PutMapping("/restaurants/{id}")
+    @PutMapping("/{id}")
     public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         restaurantRepository.save(restaurant);
     }
 
-    @DeleteMapping("/restaurants/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         restaurantRepository.deleteById(id);
     }
 
-    @PostMapping("/restaurants")
+    @PostMapping()
     public void create(@RequestBody Restaurant restaurant) {
         restaurantRepository.save(restaurant);
     }
 
-    @GetMapping("/restaurants")
+    @GetMapping()
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll();
     }
