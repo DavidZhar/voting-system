@@ -14,6 +14,8 @@ import java.util.Date;
 @Table(name="votes")
 public class Vote {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)

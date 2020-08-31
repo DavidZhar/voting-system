@@ -15,7 +15,7 @@ public class RestaurantController {
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
-        return restaurantRepository.getOne(id);
+        return restaurantRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @PutMapping("/{id}")

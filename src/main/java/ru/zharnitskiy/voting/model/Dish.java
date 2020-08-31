@@ -1,21 +1,21 @@
 package ru.zharnitskiy.voting.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="dishes")
 public class Dish {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Integer id;
 
     @NotBlank
@@ -28,9 +28,9 @@ public class Dish {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "date", nullable = false)
-    @NotNull
-    private Date date = new Date();
+    private LocalDate date = LocalDate.now();
 
     public Dish() {
     }
@@ -55,11 +55,21 @@ public class Dish {
         this.restaurant = restaurant;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", restaurant=" + restaurant +
+                ", date=" + date +
+                '}';
     }
 }
