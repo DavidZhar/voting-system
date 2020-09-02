@@ -68,15 +68,4 @@ public class DBConfig {
         properties.setProperty("jpa.showSql", "true");
         return properties;
     }
-
-//    @Bean
-//    public DataSourceInitializer initializer(){
-//        DataSourceInitializer initializer = new DataSourceInitializer();
-//        initializer.setDataSource(dataSource());
-//        initializer.setEnabled(true);
-//        initializer.setDatabasePopulator(DatabasePopulator);
-//    }
-//database.init=true
-//jdbc.initLocation=classpath:db/initDB_hsql.sql
-
 }

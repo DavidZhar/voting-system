@@ -38,8 +38,8 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/bymail")
-    public User getByMail(@RequestParam String email) {
+    @GetMapping("/byemail")
+    public User getByEmail(@RequestParam String email) {
         return userRepository.getByEmail(email);
     }
 }

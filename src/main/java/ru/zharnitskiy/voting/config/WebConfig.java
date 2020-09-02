@@ -38,19 +38,19 @@ import java.util.Locale;
 @ComponentScan("ru.zharnitskiy.voting.web")
 public class WebConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-    }
-
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver bean = new InternalResourceViewResolver();
-        bean.setViewClass(JstlView.class);
-        bean.setPrefix("/WEB-INF/view/");
-        bean.setSuffix(".jsp");
-        return bean;
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/").setViewName("index");
+//    }
+//
+//    @Bean
+//    public ViewResolver viewResolver() {
+//        InternalResourceViewResolver bean = new InternalResourceViewResolver();
+//        bean.setViewClass(JstlView.class);
+//        bean.setPrefix("/WEB-INF/view/");
+//        bean.setSuffix(".jsp");
+//        return bean;
+//    }
 
     @Bean
     public ObjectMapper mapper(){
@@ -66,7 +66,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+//        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
         converter.setObjectMapper(mapper());
         converters.add(converter);
     }
