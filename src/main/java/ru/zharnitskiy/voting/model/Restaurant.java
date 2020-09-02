@@ -11,19 +11,11 @@ import java.util.List;
 
 @Entity
 @Table(name="restaurants")
-public class Restaurant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private Integer id;
-
+public class Restaurant extends AbstractBaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "description", nullable = false)
     private String description;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
-    private List<Dish> dishes;
 
     public Integer getId() {
         return id;
@@ -35,14 +27,6 @@ public class Restaurant {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
     }
 
     public Restaurant() {

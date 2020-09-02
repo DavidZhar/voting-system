@@ -7,21 +7,22 @@ import ru.zharnitskiy.voting.repository.UserRepository;
 import ru.zharnitskiy.voting.service.AuthService;
 
 @RestController
+@RequestMapping("/profile")
 public class ProfileController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/profile")
+    @GetMapping
     public User get() {
         return userRepository.findById(AuthService.getAuthId()).orElse(null);
     }
 
-    @PutMapping("/profile")
+    @PutMapping
     public void update(@RequestBody User user) {
         userRepository.save(user);
     }
 
-    @DeleteMapping("/profile")
+    @DeleteMapping
     public void delete() {
         userRepository.deleteById(AuthService.getAuthId());
     }
