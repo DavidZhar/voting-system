@@ -6,7 +6,7 @@
 
     <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
 
-    <http create-session="stateless">
+    <http>
         <intercept-url pattern="/register" access="permitAll()"/>
         <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>
 <!--        <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>-->
