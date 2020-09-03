@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
+import ru.zharnitskiy.voting.service.UserService;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
@@ -26,11 +30,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         userRepository.deleteById(id);
-    }
-
-    @PostMapping()
-    public void create(@RequestBody User user) {
-        userRepository.save(user);
     }
 
     @GetMapping()

@@ -1,0 +1,24 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
+
+    <http create-session="stateless">
+        <intercept-url pattern="/register" access="permitAll()"/>
+        <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>
+<!--        <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>-->
+        <intercept-url pattern="/" access="isAuthenticated()"/>
+        <csrf disabled="true"/>
+        <form-login />
+        <logout />
+    </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="userService">
+            <password-encoder ref="noopEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>
