@@ -7,8 +7,8 @@ import ru.zharnitskiy.voting.model.Dish;
 import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.DishRepository;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
-import ru.zharnitskiy.voting.service.DishService;
-import ru.zharnitskiy.voting.to.DishTO;
+//import ru.zharnitskiy.voting.service.DishService;
+//import ru.zharnitskiy.voting.to.DishTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,13 +16,10 @@ import java.util.List;
 @RestController
 public class DishController {
     @Autowired
-    DishRepository dishRepository;
+    private DishRepository dishRepository;
 
     @Autowired
-    RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private DishService dishService;
+    private RestaurantRepository restaurantRepository;
 
     @PutMapping("/restaurants/{restaurantId}/dishes/{dishId}")
     public void update(@RequestBody Dish dish, @PathVariable int restaurantId, @PathVariable int dishId) {
@@ -47,8 +44,8 @@ public class DishController {
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes")
-    public List<DishTO> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
-        return dishService.getAllByRestaurantAndDate(restaurant, date);
+        return dishRepository.findAllByRestaurantAndDate(restaurant, date);
     }
 }
