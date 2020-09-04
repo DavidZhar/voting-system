@@ -1,4 +1,4 @@
-package ru.zharnitskiy.voting.web;
+package ru.zharnitskiy.voting.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,24 +6,25 @@ import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
 import ru.zharnitskiy.voting.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/rest/admin/users")
+public class AdminUserController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody User user, @PathVariable int id) {
+    public void update(@Valid @RequestBody User user, @PathVariable int id) {
         userRepository.save(user);
     }
 

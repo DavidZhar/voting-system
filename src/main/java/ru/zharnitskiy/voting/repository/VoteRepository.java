@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
     List<Vote> findAllByRestaurantAndDate(int restaurantId, LocalDate date);
+
+    Vote getByUserIdAndDate(int authUserId, LocalDate now);
 }

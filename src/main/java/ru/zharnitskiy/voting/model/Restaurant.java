@@ -17,6 +17,9 @@ public class Restaurant extends AbstractBaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rest_id")
+    private List<Dish> dishes;
+
     public String getDescription() {
         return description;
     }
