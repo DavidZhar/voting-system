@@ -2,11 +2,9 @@ package ru.zharnitskiy.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -30,6 +28,7 @@ public class Dish extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rest_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
     private Restaurant restaurant;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -73,16 +72,5 @@ public class Dish extends AbstractBaseEntity {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", restaurant=" + restaurant +
-                ", date=" + date +
-                '}';
     }
 }

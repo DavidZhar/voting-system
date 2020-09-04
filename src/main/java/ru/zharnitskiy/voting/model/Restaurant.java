@@ -1,8 +1,6 @@
 package ru.zharnitskiy.voting.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,8 +15,11 @@ public class Restaurant extends AbstractBaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rest_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<Dish> dishes;
+
+    public Restaurant() {
+    }
 
     public String getDescription() {
         return description;
@@ -28,6 +29,11 @@ public class Restaurant extends AbstractBaseEntity {
         this.description = description;
     }
 
-    public Restaurant() {
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 }

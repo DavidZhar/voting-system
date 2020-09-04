@@ -1,8 +1,5 @@
 package ru.zharnitskiy.voting.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -28,10 +25,6 @@ public class Vote extends AbstractBaseEntity {
     private Date date = new Date();
 
     public Vote() {
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public User getUser() {

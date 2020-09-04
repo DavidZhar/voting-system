@@ -31,18 +31,7 @@ public class User extends AbstractBaseEntity {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
-
-    public Integer getId() {
-        return id;
+    public User() {
     }
 
     public String getEmail() {
@@ -67,8 +56,5 @@ public class User extends AbstractBaseEntity {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public User() {
     }
 }
