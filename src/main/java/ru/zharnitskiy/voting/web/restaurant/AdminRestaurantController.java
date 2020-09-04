@@ -41,6 +41,6 @@ public class AdminRestaurantController {
 
     @GetMapping
     public List<Restaurant> getAllForDateWithDishes(@RequestParam(required = false) LocalDate date){
-        return (date == null) ? restaurantRepository.findAll() : restaurantRepository.findAllWithDishesByDate();
+        return (date == null) ? restaurantRepository.findAll() : restaurantRepository.findAllWithDishesByDate(date);
     }
 }

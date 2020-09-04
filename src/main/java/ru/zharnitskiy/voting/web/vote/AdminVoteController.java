@@ -26,7 +26,7 @@ public class AdminVoteController {
 
     @GetMapping("/restaurant/{restaurantId}")
     public List<Vote> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
-        return voteRepository.findAllByRestaurantAndDate(restaurantId, date);
+        return voteRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 
     @DeleteMapping("/{id}")

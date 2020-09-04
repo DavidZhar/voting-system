@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
-import ru.zharnitskiy.voting.service.UserService;
 import ru.zharnitskiy.voting.util.SecurityUtil;
 
 import javax.validation.Valid;
@@ -14,9 +13,6 @@ import javax.validation.Valid;
 public class UserProfileController {
     @Autowired
     private UserRepository userRepository;
-
-//    @Autowired
-//    private UserService userService;
 
     @GetMapping
     public User get() {

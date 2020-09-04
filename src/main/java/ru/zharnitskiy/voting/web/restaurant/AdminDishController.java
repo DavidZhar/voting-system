@@ -34,6 +34,7 @@ public class AdminDishController {
 
     @PutMapping("/restaurants/{restaurantId}/dishes/{dishId}")
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restaurantId, @PathVariable int dishId) {
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(RuntimeException::new));
         dishRepository.save(dish);
     }
 
@@ -43,7 +44,7 @@ public class AdminDishController {
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes")
-    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam @Nullable LocalDate date) {
+    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam  LocalDate date) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
         return dishRepository.findAllByRestaurantAndDate(restaurant, date);
     }
