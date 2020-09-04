@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -21,7 +22,7 @@ public class Dish extends AbstractBaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @NotBlank
+    @NotNull
     @Range(min = 0, max = 10000)
     @Column(name = "price", nullable = false)
     private Integer price;

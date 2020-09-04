@@ -17,10 +17,6 @@ public class Restaurant extends AbstractBaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    public Integer getId() {
-        return id;
-    }
-
     public String getDescription() {
         return description;
     }

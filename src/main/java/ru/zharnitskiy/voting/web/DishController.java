@@ -2,6 +2,7 @@ package ru.zharnitskiy.voting.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Dish;
 import ru.zharnitskiy.voting.model.Restaurant;
@@ -45,8 +46,9 @@ public class DishController {
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes")
-    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam @Nullable LocalDate date) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
         return dishRepository.findAllByRestaurantAndDate(restaurant, date);
     }
 }
+//@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
