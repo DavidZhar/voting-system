@@ -11,11 +11,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends AbstractBaseEntity {
-    @NotBlank
-    @Size(min = 2, max = 100)
-    @Column(name = "name", nullable = false)
-    private String name;
-
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -38,7 +33,6 @@ public class User extends AbstractBaseEntity {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
@@ -47,14 +41,6 @@ public class User extends AbstractBaseEntity {
 
     public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {

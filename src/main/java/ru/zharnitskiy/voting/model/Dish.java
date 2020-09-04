@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,6 +20,11 @@ public class Dish extends AbstractBaseEntity {
     @Size(min = 2, max = 100)
     @Column(name = "description", nullable = false)
     private String description;
+
+    @NotBlank
+    @Range(min = 0, max = 10000)
+    @Column(name = "price", nullable = false)
+    private Integer price;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rest_id", nullable = false)
@@ -44,6 +50,14 @@ public class Dish extends AbstractBaseEntity {
         this.description = description;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
@@ -65,6 +79,7 @@ public class Dish extends AbstractBaseEntity {
         return "Dish{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
+                ", price=" + price +
                 ", restaurant=" + restaurant +
                 ", date=" + date +
                 '}';

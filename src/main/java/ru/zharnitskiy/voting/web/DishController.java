@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("/rest")
 public class DishController {
     @Autowired
     private DishRepository dishRepository;

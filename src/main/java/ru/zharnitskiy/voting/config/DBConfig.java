@@ -32,6 +32,7 @@ public class DBConfig {
         dataSource.setPassword("");
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("initDB.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("populateDB.sql"));
         DatabasePopulatorUtils.execute(resourceDatabasePopulator, dataSource);
         return dataSource;
     }
