@@ -9,8 +9,7 @@
     <http>
         <intercept-url pattern="/register" access="permitAll()"/>
         <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>
-<!--        <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>-->
-        <intercept-url pattern="/" access="isAuthenticated()"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>
         <form-login />
         <logout />
