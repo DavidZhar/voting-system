@@ -40,6 +40,7 @@ public class AdminRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(restaurant, id);
         restaurantRepository.save(restaurant);
     }
 

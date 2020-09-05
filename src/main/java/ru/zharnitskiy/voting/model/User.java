@@ -2,11 +2,14 @@ package ru.zharnitskiy.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
@@ -34,6 +37,28 @@ public class User extends AbstractBaseEntity {
     public User() {
     }
 
+    public User(Integer id, String email, String password, Role role, Role... roles) {
+        this(id, email, password, EnumSet.of(role, roles));
+    }
+
+    public User(String email, String password, Role role, Role... roles) {
+        this(email, password, EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String email, String password, Collection<Role> roles) {
+        super(id);
+        this.email = email;
+        this.password = password;
+        setRoles(roles);
+    }
+
+    public User(String email, String password, Collection<Role> roles) {
+        super();
+        this.email = email;
+        this.password = password;
+        setRoles(roles);
+    }
+
     public String getEmail() {
         return email;
     }
@@ -54,7 +79,7 @@ public class User extends AbstractBaseEntity {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 }
