@@ -14,15 +14,6 @@
 
     <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder" factory-method="createDelegatingPasswordEncoder"/>
 
-<!--    <http use-expressions="true" create-session="stateless">-->
-<!--        <intercept-url pattern="/register" access="permitAll()"/>-->
-<!--        <intercept-url pattern="/users/**" access="hasRole('ADMIN')"/>-->
-<!--        <intercept-url pattern="/**" access="isAuthenticated()"/>-->
-<!--        <csrf disabled="true"/>-->
-<!--        <form-login />-->
-<!--        <logout />-->
-<!--    </http>-->
-
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
             <password-encoder ref="passwordEncoder"/>

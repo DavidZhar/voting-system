@@ -1,10 +1,12 @@
 package ru.zharnitskiy.voting.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import ru.zharnitskiy.voting.service.RestaurantService;
+import ru.zharnitskiy.voting.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -20,7 +22,9 @@ public class AdminRestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody Restaurant restaurant) {
+        ValidationUtil.checkNew(restaurant);
         restaurantRepository.save(restaurant);
     }
 
@@ -30,11 +34,13 @@ public class AdminRestaurantController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         restaurantRepository.save(restaurant);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         restaurantRepository.deleteById(id);
     }

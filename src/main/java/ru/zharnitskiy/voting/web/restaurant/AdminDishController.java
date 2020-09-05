@@ -1,12 +1,15 @@
 package ru.zharnitskiy.voting.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Dish;
 import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.DishRepository;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
+import ru.zharnitskiy.voting.util.ValidationUtil;
+import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -22,30 +25,35 @@ public class AdminDishController {
     private RestaurantRepository restaurantRepository;
 
     @PostMapping("/restaurants/{restaurantId}/dishes")
+    @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
-        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(RuntimeException::new));
+        ValidationUtil.checkNew(dish);
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId)));
         dishRepository.save(dish);
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes/{dishId}")
     public Dish get(@PathVariable int restaurantId, @PathVariable int dishId) {
-        return dishRepository.findById(dishId).orElseThrow(RuntimeException::new);
+        return dishRepository.findById(dishId).orElseThrow(new NotFoundException("No such entity " + restaurantId));
     }
 
     @PutMapping("/restaurants/{restaurantId}/dishes/{dishId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restaurantId, @PathVariable int dishId) {
-        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(RuntimeException::new));
+        ValidationUtil.assureIdConsistent(dish, dishId);
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId)));
         dishRepository.save(dish);
     }
 
     @DeleteMapping("/restaurants/{restaurantId}/dishes/{dishId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int restaurantId, @PathVariable int dishId) {
         dishRepository.deleteById(dishId);
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes")
-    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam  LocalDate date) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
+    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId));
         return dishRepository.findAllByRestaurantAndDate(restaurant, date);
     }
 }

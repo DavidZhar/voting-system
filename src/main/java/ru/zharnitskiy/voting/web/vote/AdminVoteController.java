@@ -1,6 +1,8 @@
 package ru.zharnitskiy.voting.web.vote;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Vote;
 import ru.zharnitskiy.voting.repository.VoteRepository;
@@ -20,8 +22,8 @@ public class AdminVoteController {
     }
 
     @GetMapping()
-    public List<Vote> getAll() {
-        return voteRepository.findAll();
+    public List<Vote> getAll(@RequestParam @Nullable LocalDate date) {
+        return (date == null) ? voteRepository.findAll() : voteRepository.findAllByDate(date);
     }
 
     @GetMapping("/restaurant/{restaurantId}")
@@ -30,6 +32,7 @@ public class AdminVoteController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         voteRepository.deleteById(id);
     }

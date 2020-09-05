@@ -1,4 +1,4 @@
-package ru.zharnitskiy.voting.to;
-
-public class RestaurantTO {
-}
+//package ru.zharnitskiy.voting.to;
+//
+//public class RestaurantTO {
+//}
