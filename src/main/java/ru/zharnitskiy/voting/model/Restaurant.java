@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name="restaurants")
+@Table(name = "restaurants")
 public class Restaurant extends AbstractBaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)

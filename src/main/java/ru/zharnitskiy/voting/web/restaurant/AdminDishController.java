@@ -2,7 +2,6 @@ package ru.zharnitskiy.voting.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Dish;
 import ru.zharnitskiy.voting.model.Restaurant;

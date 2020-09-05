@@ -7,9 +7,6 @@ import java.util.function.Supplier;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException implements Supplier<NotFoundException> {
-    public NotFoundException() {
-    }
-
     public NotFoundException(String message) {
         super(message);
     }

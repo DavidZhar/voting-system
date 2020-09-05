@@ -1,11 +1,12 @@
 package ru.zharnitskiy.voting.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
-import ru.zharnitskiy.voting.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,6 +23,7 @@ public class AdminUserController {
     }
 
     @PutMapping("/{id}")
+    @CacheEvict(value = "users", allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody User user, @PathVariable int id) {
         userRepository.save(user);
@@ -29,11 +31,13 @@ public class AdminUserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(@PathVariable int id) {
         userRepository.deleteById(id);
     }
 
     @GetMapping()
+    @Cacheable("users")
     public List<User> getAll() {
         return userRepository.findAll();
     }

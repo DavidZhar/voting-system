@@ -14,10 +14,9 @@ public class RootController {
     @Autowired
     private UserRepository userRepository;
 
-    //    @PreAuthorize
     @GetMapping("/")
     public String hello() {
-        return null;
+        return "Hello!";
     }
 
     @PostMapping("/register")
