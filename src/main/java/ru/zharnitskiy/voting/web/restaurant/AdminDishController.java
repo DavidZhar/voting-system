@@ -2,7 +2,9 @@ package ru.zharnitskiy.voting.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.zharnitskiy.voting.model.Dish;
 import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.DishRepository;
@@ -11,6 +13,7 @@ import ru.zharnitskiy.voting.util.ValidationUtil;
 import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,10 +28,13 @@ public class AdminDishController {
 
     @PostMapping("/restaurants/{restaurantId}/dishes")
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
+    public ResponseEntity<Dish> create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
         ValidationUtil.checkNew(dish);
         dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId)));
-        dishRepository.save(dish);
+        Dish created = dishRepository.save(dish);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/rest/admin/restaurants/{restaurantId}/dishes/{id}").buildAndExpand(restaurantId, created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes/{dishId}")

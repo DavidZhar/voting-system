@@ -4,13 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.zharnitskiy.voting.model.Restaurant;
+import ru.zharnitskiy.voting.model.Vote;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import ru.zharnitskiy.voting.service.RestaurantService;
+import ru.zharnitskiy.voting.util.SecurityUtil;
 import ru.zharnitskiy.voting.util.ValidationUtil;
+import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,9 +32,12 @@ public class AdminRestaurantController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(value = "restaurants", allEntries = true)
-    public void create(@Valid @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant) {
         ValidationUtil.checkNew(restaurant);
-        restaurantRepository.save(restaurant);
+        Restaurant created = restaurantRepository.save(restaurant);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/rest/admin/restaurants/{id}").buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @GetMapping("/{id}")

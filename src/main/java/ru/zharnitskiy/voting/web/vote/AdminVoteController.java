@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Vote;
 import ru.zharnitskiy.voting.repository.VoteRepository;
+import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +21,7 @@ public class AdminVoteController {
 
     @GetMapping("/{id}")
     public Vote get(@PathVariable int id) {
-        return voteRepository.findById(id).orElseThrow(RuntimeException::new);
+        return voteRepository.findById(id).orElseThrow(new NotFoundException("No such entity with id " + id));
     }
 
     @GetMapping()
