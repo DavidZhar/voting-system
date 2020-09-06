@@ -5,7 +5,7 @@ import ru.zharnitskiy.voting.model.Role;
 import java.util.Set;
 
 public class MockUser {
-    private int id;
+    private Integer id;
     private String email;
     private String password;
     private Set<Role> roles;
