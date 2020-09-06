@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
+import ru.zharnitskiy.voting.service.UserService;
 import ru.zharnitskiy.voting.util.SecurityUtil;
+import ru.zharnitskiy.voting.util.ValidationUtil;
 
 import javax.validation.Valid;
 
@@ -15,6 +17,9 @@ public class UserProfileController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public User get() {
         return userRepository.findById(SecurityUtil.authUserId()).orElseThrow(RuntimeException::new);
@@ -23,6 +28,8 @@ public class UserProfileController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody User user) {
+        ValidationUtil.assureIdConsistent(user, SecurityUtil.authUserId());
+        userService.prepareToSave(user);
         userRepository.save(user);
     }
 

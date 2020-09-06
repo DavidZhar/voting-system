@@ -13,7 +13,7 @@ public class VoteService {
     private VoteRepository voteRepository;
 
     public void changeVote(Vote vote, int id) throws RuntimeException {
-        LocalTime votingEndTime = LocalTime.of(12, 0, 0);
+        LocalTime votingEndTime = LocalTime.of(11, 0, 0);
         LocalTime time = LocalTime.now();
         if (time.isAfter(votingEndTime)) throw new RuntimeException("You can't change your vote");
         voteRepository.save(vote);

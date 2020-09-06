@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
+import ru.zharnitskiy.voting.service.UserService;
+import ru.zharnitskiy.voting.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,6 +19,9 @@ public class AdminUserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
@@ -26,6 +31,8 @@ public class AdminUserController {
     @CacheEvict(value = "users", allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody User user, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(user, id);
+        userService.prepareToSave(user);
         userRepository.save(user);
     }
 
