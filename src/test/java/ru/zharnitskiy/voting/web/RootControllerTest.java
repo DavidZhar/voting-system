@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.zharnitskiy.voting.TestData.*;
 import static ru.zharnitskiy.voting.TestMatcher.USER_MATCHER;
 import static ru.zharnitskiy.voting.TestUtil.readFromJson;
-import static ru.zharnitskiy.voting.web.json.JacksonObjectMapper.getMapper;
 import static ru.zharnitskiy.voting.web.json.JsonUtil.writeValue;
 
 class RootControllerTest extends AbstractControllerTest {
@@ -44,7 +43,7 @@ class RootControllerTest extends AbstractControllerTest {
     void createWithExistingEmail() throws Exception {
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(getMapper().writeValueAsString(MOCK_EXISTING_USER)))
+                .content(writeValue(MOCK_EXISTING_USER)))
                 .andDo(print())
                 .andExpect(status().isConflict());
 

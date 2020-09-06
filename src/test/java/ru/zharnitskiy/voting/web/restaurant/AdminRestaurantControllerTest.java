@@ -9,8 +9,6 @@ import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import ru.zharnitskiy.voting.web.AbstractControllerTest;
 import ru.zharnitskiy.voting.web.json.JsonUtil;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -42,7 +40,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void getRestaurant() throws Exception {
-        mockMvc.perform(get("/rest/admin/restaurants/100002")
+        mockMvc.perform(get("/rest/admin/restaurants/" + RESTAURANT_1.getId())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -52,23 +50,24 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void updateRestaurant() throws Exception {
-        mockMvc.perform(put("/rest/admin/restaurants/100002")
+        mockMvc.perform(put("/rest/admin/restaurants/" + RESTAURANT_1.getId())
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(RESTAURANT_UPDATED)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.findById(100002).orElse(null), RESTAURANT_UPDATED);
+        RESTAURANT_MATCHER.assertMatch(restaurantRepository.findById(RESTAURANT_1.getId()).orElse(null), RESTAURANT_UPDATED);
     }
 
     @Test
     void deleteRestaurant() throws Exception {
-        mockMvc.perform(delete("/rest/admin/restaurants/100002")
+        mockMvc.perform(delete("/rest/admin/restaurants/" + RESTAURANT_1.getId())
                 .with(userHttpBasic(ADMIN)))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(status().isNoContent());
 
-        assertNull(restaurantRepository.findById(100002).orElse(null));
+        assertNull(restaurantRepository.findById(RESTAURANT_1.getId()).orElse(null));
     }
 
     @Test
@@ -85,6 +84,6 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> RESTAURANT_MATCHER.assertMatch(readListFromJsonMvcResult(result, Restaurant.class), restaurantRepository.findAllWithDishesByDate(LocalDate.of(2020, 1, 1))));
+                .andExpect(result -> RESTAURANT_MATCHER.assertMatch(readListFromJsonMvcResult(result, Restaurant.class), restaurantRepository.findAllWithDishesByDate(DATE_1)));
     }
 }

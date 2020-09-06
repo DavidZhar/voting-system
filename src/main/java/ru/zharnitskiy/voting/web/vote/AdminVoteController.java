@@ -25,20 +25,17 @@ public class AdminVoteController {
     }
 
     @GetMapping()
-    @Cacheable("votes")
     public List<Vote> getAll(@RequestParam @Nullable LocalDate date) {
         return (date == null) ? voteRepository.findAll() : voteRepository.findAllByDate(date);
     }
 
     @GetMapping("/restaurant/{restaurantId}")
-    @Cacheable("votes")
     public List<Vote> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
         return voteRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "votes", allEntries = true)
     public void delete(@PathVariable int id) {
         voteRepository.deleteById(id);
     }

@@ -23,7 +23,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     @Test
     void getUser() throws Exception {
-        mockMvc.perform(get("/rest/admin/users/100000")
+        mockMvc.perform(get("/rest/admin/users/" + USER.getId())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -33,7 +33,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        mockMvc.perform(put("/rest/admin/users/100000")
+        mockMvc.perform(put("/rest/admin/users/" + USER.getId())
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(MOCK_USER_UPDATED)))
@@ -45,7 +45,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteUser() throws Exception {
-        mockMvc.perform(delete("/rest/admin/users/100000")
+        mockMvc.perform(delete("/rest/admin/users/" + USER.getId())
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print());
         assertNull(userRepository.getByEmail("user@mail.ru"));
@@ -63,7 +63,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     @Test
     void getByEmail() throws Exception {
-        mockMvc.perform(get("/rest/admin/users/byemail?email=user@mail.ru")
+        mockMvc.perform(get("/rest/admin/users/byemail?email=" + USER.getEmail())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())

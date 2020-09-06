@@ -4,6 +4,7 @@ import org.assertj.core.util.Lists;
 import ru.zharnitskiy.voting.model.Dish;
 import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.model.User;
+import ru.zharnitskiy.voting.model.Vote;
 
 import java.util.function.BiConsumer;
 
@@ -17,6 +18,7 @@ public class TestMatcher<T> {
     public static final TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(User.class, "password");
     public static final TestMatcher<Restaurant> RESTAURANT_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Restaurant.class, "dishes");
     public static final TestMatcher<Dish> DISH_MATCHER = TestMatcher.usingEqualsAssertions(Dish.class);
+    public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingEqualsAssertions(Vote.class);
 
     private TestMatcher(Class<T> clazz, BiConsumer<T, T> assertion, BiConsumer<Iterable<T>, Iterable<T>> iterableAssertion) {
         this.clazz = clazz;
@@ -52,18 +54,5 @@ public class TestMatcher<T> {
     public void assertMatch(Iterable<T> actual, Iterable<T> expected) {
         iterableAssertion.accept(actual, expected);
     }
-
-//    public ResultMatcher contentJson(T expected) {
-//        return result -> assertMatch(TestUtil.readFromJsonMvcResult(result, clazz), expected);
-//    }
-//
-//    @SafeVarargs
-//    public final ResultMatcher contentJson(T... expected) {
-//        return contentJson(List.of(expected));
-//    }
-//
-//    public ResultMatcher contentJson(Iterable<T> expected) {
-//        return result -> assertMatch(readListFromJsonMvcResult(result, clazz), expected);
-//    }
 }
 

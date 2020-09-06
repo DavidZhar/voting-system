@@ -7,14 +7,11 @@ import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import ru.zharnitskiy.voting.web.AbstractControllerTest;
 
-import java.time.LocalDate;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.zharnitskiy.voting.TestData.RESTAURANT_1;
-import static ru.zharnitskiy.voting.TestData.USER;
+import static ru.zharnitskiy.voting.TestData.*;
 import static ru.zharnitskiy.voting.TestMatcher.RESTAURANT_MATCHER;
 import static ru.zharnitskiy.voting.TestUtil.*;
 
@@ -39,6 +36,6 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> RESTAURANT_MATCHER.assertMatch(readListFromJsonMvcResult(result, Restaurant.class), restaurantRepository.findAllWithDishesByDate(LocalDate.of(2020, 1, 1))));
+                .andExpect(result -> RESTAURANT_MATCHER.assertMatch(readListFromJsonMvcResult(result, Restaurant.class), restaurantRepository.findAllWithDishesByDate(DATE_1)));
     }
 }
