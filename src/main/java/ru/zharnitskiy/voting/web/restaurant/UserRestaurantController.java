@@ -1,7 +1,6 @@
 package ru.zharnitskiy.voting.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
@@ -25,7 +24,6 @@ public class UserRestaurantController {
     }
 
     @GetMapping
-    @Cacheable("restaurants")
     public List<Restaurant> getAllForDateWithDishes(@RequestParam(required = false) LocalDate date) {
         return (date == null) ? restaurantRepository.findAll() : restaurantRepository.findAllWithDishesByDate(date);
     }

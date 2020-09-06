@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.zharnitskiy.voting.model.Dish;
-import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.repository.DishRepository;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import ru.zharnitskiy.voting.util.ValidationUtil;

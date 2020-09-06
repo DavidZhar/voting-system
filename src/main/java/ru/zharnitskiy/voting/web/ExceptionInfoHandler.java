@@ -55,5 +55,4 @@ public class ExceptionInfoHandler {
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
         return new ErrorInfo(req.getRequestURL(), e.getMessage());
     }
-
 }
