@@ -11,6 +11,9 @@ Voting system for deciding where to have lunch.
  * If user votes again the same day:
     - If it is before 11:00 we asume that he changed his mind.
     - If it is after 11:00 then it is too late, vote can't be changed.
+    
+ Stack: Java 8/Maven/REST/Spring MVC/Spring Security/Spring DATA JPA/Hibernate/HSQLDB
+ 
 -----------------------------
 
 ### REST API
@@ -25,7 +28,7 @@ New users can register:
     "roles": ["USER"]
 }'`
 
-Admins can get, modify and delete users:  
+Admins can get, update and delete users:  
 
 `curl localhost:8080/rest/admin/users --user admin@mail.ru:admin`
 
@@ -45,5 +48,89 @@ Admins can get, modify and delete users:
 
 `curl 'localhost:8080/rest/admin/users/byemail?email=user@mail.ru' --user admin@mail.ru:admin`
 
----
+Registered users can get, update and delete themselves:
 
+`curl localhost:8080/rest/profile --user user@mail.ru:password`
+
+`curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/profile --user user@mail.ru:password -d
+'{
+    "email": "user@mail.ru",
+    "password": "updated",
+    "roles": ["ADMIN"]
+}'`
+
+`curl -X DELETE localhost:8080/rest/profile --user user@mail.ru:password`
+
+Users can get restaurants without dishes by id and also with dishes by date (with menu for that day):
+
+`curl localhost:8080/rest/restaurants --user user@mail.ru:password`
+
+`curl localhost:8080/rest/restaurants/100002 --user user@mail.ru:password`
+
+`curl 'localhost:8080/rest/restaurants?date=2020-02-02' --user user@mail.ru:password`
+
+Admins can get, update and delete restaurants:
+
+`curl -X POST -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants --user admin@mail.ru:admin -d
+'{
+    "description": "Restaurant NEW"
+}'`
+
+`curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants/100002 --user admin@mail.ru:admin -d 
+'{
+    "id": 100002,
+    "description": "Restaurant1 UPDATED"
+}'`
+
+`curl -X DELETE localhost:8080/rest/admin/restaurants/100002 --user admin@mail.ru:admin`
+
+Admins can get, create, update and delete dishes for specific date and restarant:
+
+`curl 'localhost:8080/rest/admin/restaurants/100002/dishes?date=2020-01-01' --user admin@mail.ru:admin` 
+
+`curl -X POST -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants/100002/dishes --user admin@mail.ru:admin -d
+'{
+    "description": "Restaurant1_Date1_Dish_NEW",
+    "price": 1000,
+    "date": "2020-03-03"
+}'`
+
+`curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants/100002/dishes/100004 --user admin@mail.ru:admin -d
+'{
+    "id": 100004,
+    "description": "Restaurant1_Date1_Dish_NEW",
+    "price": 1000,
+    "date": "2020-03-03"
+}'`
+
+`curl -X DELETE localhost:8080/rest/admin/restaurants/100002/dishes/100006 --user admin@mail.ru:admin`
+
+Users can vote for restaurant:
+
+`curl -X POST localhost:8080/rest/votes/ --user user@mail.ru:password -d
+'{
+    "restaurant": {
+        "id": 100002
+    }
+}'`
+
+Users can change their vote (before 11:00):
+
+`curl -X PUT localhost:8080/rest/votes/ --user user@mail.ru:password -d
+'{
+    "restaurant": {
+        "id": 100003
+    }
+}'`
+
+Admins can get and delete votes by id and by restaurant/date:
+
+`curl localhost:8080/rest/admin/votes/ --user admin@mail.ru:admin`
+
+`curl localhost:8080/rest/admin/votes/100009 --user admin@mail.ru:admin`
+
+`curl 'localhost:8080/rest/admin/votes?date=2020-01-01' --user admin@mail.ru:admin`
+
+`curl 'localhost:8080/rest/admin/votes/restaurant/100002?date=2020-01-01' --user admin@mail.ru:admin`
+
+`curl -X DELETE localhost:8080/rest/admin/votes/ --user admin@mail.ru:admin`
