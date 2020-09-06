@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.zharnitskiy.voting.TestData;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
 
@@ -47,6 +46,15 @@ class RootControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isConflict());
 
-        assertEquals(userRepository.getByEmail("user@mail.ru").getPassword(), "{noop}" + TestData.USER.getPassword());
+        assertEquals(userRepository.getByEmail("user@mail.ru").getPassword(), "{noop}" + USER.getPassword());
     }
+
+//    @Test
+//    void createWithWrongFields() throws Exception {
+//        mockMvc.perform(post("/register")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(writeValue(MOCK_WRONG_USER)))
+//                .andDo(print())
+//                .andExpect(status().isBadRequest());
+//    }
 }

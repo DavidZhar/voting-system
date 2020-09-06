@@ -16,6 +16,7 @@ public class TestData {
     public static final MockUser MOCK_NEW_USER = new MockUser("new@mail.ru", "newpass", EnumSet.of(Role.USER));
     public static final MockUser MOCK_USER_UPDATED = new MockUser(100000, "updated@mail.ru", "passupd", EnumSet.of(Role.USER));
     public static final MockUser MOCK_EXISTING_USER = new MockUser("user@mail.ru", "newpass", EnumSet.of(Role.USER));
+    public static final MockUser MOCK_WRONG_USER = new MockUser("usermail.ru", "pass", EnumSet.of(Role.USER));
 
     public static final Restaurant RESTAURANT_1 = new Restaurant(100002, "Restaurant1");
     public static final Restaurant RESTAURANT_2 = new Restaurant(100003, "Restaurant2");
