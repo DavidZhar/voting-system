@@ -5,6 +5,7 @@ import ru.zharnitskiy.voting.model.Role;
 import java.util.Set;
 
 public class MockUser {
+    private int id;
     private String email;
     private String password;
     private Set<Role> roles;
@@ -16,6 +17,21 @@ public class MockUser {
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    public MockUser(int id, String email, String password, Set<Role> roles) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {

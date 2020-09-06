@@ -29,7 +29,6 @@ public class AdminUserController {
     }
 
     @PutMapping("/{id}")
-    @CacheEvict(value = "users", allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody User user, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(user, id);
@@ -39,13 +38,11 @@ public class AdminUserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "users", allEntries = true)
     public void delete(@PathVariable int id) {
         userRepository.deleteById(id);
     }
 
     @GetMapping()
-    @Cacheable("users")
     public List<User> getAll() {
         return userRepository.findAll();
     }

@@ -1,10 +1,11 @@
 package ru.zharnitskiy.voting.web.vote;
 
 import org.junit.jupiter.api.Test;
+import ru.zharnitskiy.voting.web.AbstractControllerTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminVoteControllerTest {
+class AdminVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void get() {
