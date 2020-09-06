@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
 import ru.zharnitskiy.voting.service.UserService;
-import ru.zharnitskiy.voting.util.SecurityUtil;
 import ru.zharnitskiy.voting.util.ValidationUtil;
+import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
+
+import static ru.zharnitskiy.voting.util.SecurityUtil.authUserId;
 
 @RestController
 @RequestMapping("/rest/profile")
@@ -22,13 +24,13 @@ public class UserProfileController {
 
     @GetMapping
     public User get() {
-        return userRepository.findById(SecurityUtil.authUserId()).orElseThrow(RuntimeException::new);
+        return userRepository.findById(authUserId()).orElseThrow(new NotFoundException("User not found"));
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody User user) {
-        ValidationUtil.assureIdConsistent(user, SecurityUtil.authUserId());
+        ValidationUtil.assureIdConsistent(user, authUserId());
         userService.prepareToSave(user);
         userRepository.save(user);
     }
@@ -36,6 +38,6 @@ public class UserProfileController {
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete() {
-        userRepository.deleteById(SecurityUtil.authUserId());
+        userRepository.deleteById(authUserId());
     }
 }

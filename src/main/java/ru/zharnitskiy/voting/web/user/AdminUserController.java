@@ -9,6 +9,7 @@ import ru.zharnitskiy.voting.model.User;
 import ru.zharnitskiy.voting.repository.UserRepository;
 import ru.zharnitskiy.voting.service.UserService;
 import ru.zharnitskiy.voting.util.ValidationUtil;
+import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,7 +25,7 @@ public class AdminUserController {
 
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
-        return userRepository.findById(id).orElseThrow(RuntimeException::new);
+        return userRepository.findById(id).orElseThrow(new NotFoundException("No such entity with id " + id));
     }
 
     @PutMapping("/{id}")

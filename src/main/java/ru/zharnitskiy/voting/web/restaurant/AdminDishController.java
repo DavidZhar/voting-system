@@ -30,7 +30,7 @@ public class AdminDishController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Dish> create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
         ValidationUtil.checkNew(dish);
-        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId)));
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity with id " + restaurantId)));
         Dish created = dishRepository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/rest/admin/restaurants/{restaurantId}/dishes/{id}").buildAndExpand(restaurantId, created.getId()).toUri();
@@ -46,7 +46,7 @@ public class AdminDishController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restaurantId, @PathVariable int dishId) {
         ValidationUtil.assureIdConsistent(dish, dishId);
-        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId)));
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity with id " + restaurantId)));
         dishRepository.save(dish);
     }
 

@@ -8,12 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.zharnitskiy.voting.model.Restaurant;
-import ru.zharnitskiy.voting.model.Vote;
 import ru.zharnitskiy.voting.repository.RestaurantRepository;
 import ru.zharnitskiy.voting.service.RestaurantService;
-import ru.zharnitskiy.voting.util.SecurityUtil;
 import ru.zharnitskiy.voting.util.ValidationUtil;
-import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
 import java.net.URI;
