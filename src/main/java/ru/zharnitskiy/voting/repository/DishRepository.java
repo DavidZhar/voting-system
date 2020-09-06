@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface DishRepository extends JpaRepository<Dish, Integer> {
-    List<Dish> findAllByRestaurantAndDate(Restaurant restaurant, LocalDate date);
+    List<Dish> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
 }

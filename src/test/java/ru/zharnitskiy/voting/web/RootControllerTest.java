@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.zharnitskiy.voting.TestData.*;
 import static ru.zharnitskiy.voting.TestMatcher.USER_MATCHER;
+import static ru.zharnitskiy.voting.TestUtil.readFromJson;
 import static ru.zharnitskiy.voting.web.json.JacksonObjectMapper.getMapper;
 import static ru.zharnitskiy.voting.web.json.JsonUtil.writeValue;
 
@@ -31,7 +32,7 @@ class RootControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
 
-        User created = getMapper().readValue(action.andReturn().getResponse().getContentAsString(), User.class);
+        User created = readFromJson(action, User.class);
         int newId = created.getId();
         NEW_USER.setId(newId);
         USER_MATCHER.assertMatch(created, NEW_USER);
@@ -46,6 +47,7 @@ class RootControllerTest extends AbstractControllerTest {
                 .content(getMapper().writeValueAsString(MOCK_EXISTING_USER)))
                 .andDo(print())
                 .andExpect(status().isConflict());
+
         assertEquals(userRepository.getByEmail("user@mail.ru").getPassword(), "{noop}" + TestData.USER.getPassword());
     }
 }

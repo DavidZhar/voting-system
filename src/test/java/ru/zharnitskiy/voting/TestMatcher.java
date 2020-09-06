@@ -1,6 +1,8 @@
 package ru.zharnitskiy.voting;
 
 import org.assertj.core.util.Lists;
+import ru.zharnitskiy.voting.model.Dish;
+import ru.zharnitskiy.voting.model.Restaurant;
 import ru.zharnitskiy.voting.model.User;
 
 import java.util.function.BiConsumer;
@@ -13,6 +15,8 @@ public class TestMatcher<T> {
     private final BiConsumer<Iterable<T>, Iterable<T>> iterableAssertion;
 
     public static final TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(User.class, "password");
+    public static final TestMatcher<Restaurant> RESTAURANT_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Restaurant.class, "dishes");
+    public static final TestMatcher<Dish> DISH_MATCHER = TestMatcher.usingEqualsAssertions(Dish.class);
 
     private TestMatcher(Class<T> clazz, BiConsumer<T, T> assertion, BiConsumer<Iterable<T>, Iterable<T>> iterableAssertion) {
         this.clazz = clazz;

@@ -58,7 +58,6 @@ public class AdminDishController {
 
     @GetMapping("/restaurants/{restaurantId}/dishes")
     public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity " + restaurantId));
-        return dishRepository.findAllByRestaurantAndDate(restaurant, date);
+        return dishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 }
