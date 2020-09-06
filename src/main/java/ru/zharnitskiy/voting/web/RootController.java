@@ -37,3 +37,4 @@ public class RootController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 }
+
