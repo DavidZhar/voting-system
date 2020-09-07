@@ -1,6 +1,7 @@
 package ru.zharnitskiy.voting.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class AdminDishController {
 
     @PostMapping("/restaurants/{restaurantId}/dishes")
     @ResponseStatus(HttpStatus.CREATED)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public ResponseEntity<Dish> create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
         ValidationUtil.checkNew(dish);
         dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity with id " + restaurantId)));
@@ -43,6 +45,7 @@ public class AdminDishController {
 
     @PutMapping("/restaurants/{restaurantId}/dishes/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restaurantId, @PathVariable int dishId) {
         ValidationUtil.assureIdConsistent(dish, dishId);
         dish.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(new NotFoundException("No such entity with id " + restaurantId)));
@@ -51,6 +54,7 @@ public class AdminDishController {
 
     @DeleteMapping("/restaurants/{restaurantId}/dishes/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@PathVariable int restaurantId, @PathVariable int dishId) {
         dishRepository.deleteById(dishId);
     }
