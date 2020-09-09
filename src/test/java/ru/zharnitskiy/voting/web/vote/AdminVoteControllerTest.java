@@ -53,14 +53,4 @@ class AdminVoteControllerTest extends AbstractControllerTest {
                 .andExpect(result -> VOTE_MATCHER.assertMatch(readListFromJsonMvcResult(result, Vote.class),
                         voteRepository.findAllByRestaurantIdAndDate(RESTAURANT_1.getId(), DATE_1)));
     }
-
-    @Test
-    void deleteVote() throws Exception {
-        mockMvc.perform(delete("/rest/admin/votes/" + VOTE_1.getId())
-                .with(userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-
-        assertNull(voteRepository.findById(VOTE_1.getId()).orElse(null));
-    }
 }

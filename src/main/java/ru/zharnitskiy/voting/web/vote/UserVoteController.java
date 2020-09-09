@@ -41,7 +41,7 @@ public class UserVoteController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Vote> create(@Valid @RequestBody Vote vote) {
         ValidationUtil.checkNew(vote);
-        vote.setUser(userRepository.findById(authUserId()).orElseThrow(new NotFoundException("User not found")));
+        vote.setUser(userRepository.getOne(authUserId()));
         Vote created = voteRepository.save(vote);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/rest/votes/{id}").buildAndExpand(created.getId()).toUri();
@@ -52,7 +52,7 @@ public class UserVoteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Vote vote, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(vote, id);
-        vote.setUser(userRepository.findById(authUserId()).orElseThrow(new NotFoundException("User not found")));
+        vote.setUser(userRepository.getOne(authUserId()));
         voteService.changeVote(vote);
     }
 }

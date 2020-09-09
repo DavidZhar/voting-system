@@ -1,7 +1,6 @@
 package ru.zharnitskiy.voting.web.vote;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.zharnitskiy.voting.model.Vote;
@@ -32,11 +31,5 @@ public class AdminVoteController {
     @GetMapping("/restaurant/{restaurantId}")
     public List<Vote> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
         return voteRepository.findAllByRestaurantIdAndDate(restaurantId, date);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        voteRepository.deleteById(id);
     }
 }
