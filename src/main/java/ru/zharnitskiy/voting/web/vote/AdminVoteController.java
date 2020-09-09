@@ -25,7 +25,7 @@ public class AdminVoteController {
 
     @GetMapping()
     public List<Vote> getAll(@RequestParam @Nullable LocalDate date) {
-        return (date == null) ? voteRepository.findAll() : voteRepository.findAllByDate(date);
+        return (date == null) ? voteRepository.findAllWithUsersAndRestaurants() : voteRepository.findAllByDate(date);
     }
 
     @GetMapping("/restaurant/{restaurantId}")
