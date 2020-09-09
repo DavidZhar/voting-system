@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface DishRepository extends JpaRepository<Dish, Integer> {
+    @Query("SELECT d FROM Dish d WHERE d.restaurant.id = ?1 AND d.date = ?2")
     List<Dish> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
 
     @Transactional

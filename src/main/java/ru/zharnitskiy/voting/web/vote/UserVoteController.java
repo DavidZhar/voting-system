@@ -10,7 +10,6 @@ import ru.zharnitskiy.voting.repository.UserRepository;
 import ru.zharnitskiy.voting.repository.VoteRepository;
 import ru.zharnitskiy.voting.service.VoteService;
 import ru.zharnitskiy.voting.util.ValidationUtil;
-import ru.zharnitskiy.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
 import java.net.URI;
