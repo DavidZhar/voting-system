@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = {"description"}, name = "restaurant_idx")})
 public class Restaurant extends AbstractBaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
@@ -20,7 +20,6 @@ public class Restaurant extends AbstractBaseEntity {
     }
 
     public Restaurant(String description) {
-        super();
         this.description = description;
     }
 

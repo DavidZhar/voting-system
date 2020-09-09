@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes")
+@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "date", "description"}, name = "dish_day_idx")})
 public class Dish extends AbstractBaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
@@ -39,7 +39,6 @@ public class Dish extends AbstractBaseEntity {
     }
 
     public Dish(String description, int price, Restaurant restaurant, LocalDate date) {
-        super();
         this.description = description;
         this.price = price;
         this.restaurant = restaurant;

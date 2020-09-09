@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "votes")
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "user_vote_idx")})
 public class Vote extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -28,7 +28,6 @@ public class Vote extends AbstractBaseEntity {
     }
 
     public Vote(User user, Restaurant restaurant, LocalDate date) {
-        super();
         this.user = user;
         this.restaurant = restaurant;
         this.date = date;

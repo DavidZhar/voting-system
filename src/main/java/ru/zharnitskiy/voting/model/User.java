@@ -28,7 +28,8 @@ public class User extends AbstractBaseEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_idx")})
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
@@ -53,7 +54,6 @@ public class User extends AbstractBaseEntity {
     }
 
     public User(String email, String password, Collection<Role> roles) {
-        super();
         this.email = email;
         this.password = password;
         setRoles(roles);
