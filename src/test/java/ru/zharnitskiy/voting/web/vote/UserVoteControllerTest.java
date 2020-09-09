@@ -1,5 +1,6 @@
 package ru.zharnitskiy.voting.web.vote;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.zharnitskiy.voting.TestData.*;
 import static ru.zharnitskiy.voting.TestMatcher.VOTE_MATCHER;
 import static ru.zharnitskiy.voting.TestUtil.*;
+import static ru.zharnitskiy.voting.service.VoteService.VOTING_END_TIME;
 
 
 class UserVoteControllerTest extends AbstractControllerTest {
@@ -54,24 +56,29 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         create();
+        VOTING_END_TIME = LocalTime.of(23, 59, 59);
 
-        if (LocalTime.now().isAfter(VoteService.VOTING_END_TIME)) {
-            mockMvc.perform(put("/rest/votes/" + NEW_VOTE.getId())
-                    .with(userHttpBasic(USER))
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"restaurant\":{\"id\":100003}}"))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest());
-        } else {
-            mockMvc.perform(put("/rest/votes/" + NEW_VOTE.getId())
-                    .with(userHttpBasic(USER))
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"restaurant\":{\"id\":100003}}"))
-                    .andDo(print())
-                    .andExpect(status().isNoContent());
+        mockMvc.perform(put("/rest/votes/" + NEW_VOTE.getId())
+                .with(userHttpBasic(USER))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"restaurant\":{\"id\":100003}}"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
 
-            NEW_VOTE.setRestaurant(RESTAURANT_2);
-            VOTE_MATCHER.assertMatch(voteRepository.findById(NEW_VOTE.getId()).orElse(null), NEW_VOTE);
-        }
+        NEW_VOTE.setRestaurant(RESTAURANT_2);
+        VOTE_MATCHER.assertMatch(voteRepository.findById(NEW_VOTE.getId()).orElse(null), NEW_VOTE);
+    }
+
+    @Test
+    void updateTimeExceeded() throws Exception {
+        create();
+        VOTING_END_TIME = LocalTime.of(0, 0, 0);
+
+        mockMvc.perform(put("/rest/votes/" + NEW_VOTE.getId())
+                .with(userHttpBasic(USER))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"restaurant\":{\"id\":100003}}"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }

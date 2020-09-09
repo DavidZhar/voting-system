@@ -13,7 +13,7 @@ public class VoteService {
     @Autowired
     private VoteRepository voteRepository;
 
-    public static final LocalTime VOTING_END_TIME = LocalTime.of(11, 0, 0);
+    public static LocalTime VOTING_END_TIME = LocalTime.of(11, 0, 0);
 
     public void changeVote(Vote vote) throws RuntimeException {
         LocalTime time = LocalTime.now();
