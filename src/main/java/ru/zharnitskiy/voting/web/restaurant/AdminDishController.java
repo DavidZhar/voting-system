@@ -56,7 +56,7 @@ public class AdminDishController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@PathVariable int restaurantId, @PathVariable int dishId) {
-        dishRepository.deleteById(dishId);
+        dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
     }
 
     @GetMapping("/restaurants/{restaurantId}/dishes")

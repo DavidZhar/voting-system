@@ -13,7 +13,7 @@ import java.util.List;
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
     List<Vote> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
 
-    Vote getByUserIdAndDate(int authUserId, LocalDate now);
+    Vote getByUserIdAndDate(int userId, LocalDate now);
 
     List<Vote> findAllByDate(LocalDate date);
 }

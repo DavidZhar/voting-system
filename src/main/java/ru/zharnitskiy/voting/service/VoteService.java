@@ -18,7 +18,7 @@ public class VoteService {
     public void changeVote(Vote vote) throws RuntimeException {
         LocalTime time = LocalTime.now();
         if (time.isAfter(VOTING_END_TIME))
-            throw new TimeExpireException("You can't change your vote after " + VOTING_END_TIME.toString());
+            throw new TimeExpireException("You can't change your vote after " + VOTING_END_TIME);
         voteRepository.save(vote);
     }
 }
