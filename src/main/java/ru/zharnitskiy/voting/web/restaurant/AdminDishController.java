@@ -18,15 +18,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/admin")
+@RequestMapping(AdminDishController.REST_URL)
 public class AdminDishController {
+    static final String REST_URL = "/rest/admin/restaurants";
+
     @Autowired
     private DishRepository dishRepository;
 
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @PostMapping("/restaurants/{restaurantId}/dishes")
+    @PostMapping("/{restaurantId}/dishes")
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(value = "restaurants", allEntries = true)
     public ResponseEntity<Dish> create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
@@ -38,12 +40,12 @@ public class AdminDishController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @GetMapping("/restaurants/{restaurantId}/dishes/{dishId}")
+    @GetMapping("/{restaurantId}/dishes/{dishId}")
     public Dish get(@PathVariable int restaurantId, @PathVariable int dishId) {
         return dishRepository.findById(dishId).orElseThrow(new NotFoundException("No such entity " + restaurantId));
     }
 
-    @PutMapping("/restaurants/{restaurantId}/dishes/{dishId}")
+    @PutMapping("/{restaurantId}/dishes/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restaurantId, @PathVariable int dishId) {
@@ -52,14 +54,14 @@ public class AdminDishController {
         dishRepository.save(dish);
     }
 
-    @DeleteMapping("/restaurants/{restaurantId}/dishes/{dishId}")
+    @DeleteMapping("/{restaurantId}/dishes/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@PathVariable int restaurantId, @PathVariable int dishId) {
         dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
     }
 
-    @GetMapping("/restaurants/{restaurantId}/dishes")
+    @GetMapping("/{restaurantId}/dishes")
     public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
         return dishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }

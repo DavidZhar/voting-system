@@ -14,8 +14,10 @@ import javax.validation.Valid;
 import static ru.zharnitskiy.voting.util.SecurityUtil.authUserId;
 
 @RestController
-@RequestMapping("/rest/profile")
+@RequestMapping(UserProfileController.REST_URL)
 public class UserProfileController {
+    static final String REST_URL = "/rest/profile";
+
     @Autowired
     private UserRepository userRepository;
 

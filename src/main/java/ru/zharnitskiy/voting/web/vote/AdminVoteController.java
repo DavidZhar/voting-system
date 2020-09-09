@@ -12,8 +12,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/admin/votes")
+@RequestMapping(AdminVoteController.REST_URL)
 public class AdminVoteController {
+    static final String REST_URL = "/rest/admin/votes";
+
     @Autowired
     private VoteRepository voteRepository;
 

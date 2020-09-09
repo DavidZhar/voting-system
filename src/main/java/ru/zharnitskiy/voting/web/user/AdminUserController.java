@@ -13,8 +13,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/admin/users")
+@RequestMapping(AdminUserController.REST_URL)
 public class AdminUserController {
+    static final String REST_URL = "/rest/admin/users";
+
     @Autowired
     private UserRepository userRepository;
 

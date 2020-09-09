@@ -19,8 +19,10 @@ import java.time.LocalDate;
 import static ru.zharnitskiy.voting.util.SecurityUtil.authUserId;
 
 @RestController
-@RequestMapping("/rest/votes")
+@RequestMapping(UserVoteController.REST_URL)
 public class UserVoteController {
+    static final String REST_URL = "/rest/votes";
+
     @Autowired
     private VoteRepository voteRepository;
 

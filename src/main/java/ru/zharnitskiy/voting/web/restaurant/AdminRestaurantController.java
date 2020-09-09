@@ -18,8 +18,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/admin/restaurants")
+@RequestMapping(AdminRestaurantController.REST_URL)
 public class AdminRestaurantController {
+    static final String REST_URL = "/rest/admin/restaurants";
+
     @Autowired
     private RestaurantRepository restaurantRepository;
 
