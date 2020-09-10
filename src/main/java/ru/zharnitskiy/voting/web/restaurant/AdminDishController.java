@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.zharnitskiy.voting.model.Dish;
@@ -62,7 +63,7 @@ public class AdminDishController {
     }
 
     @GetMapping("/{restaurantId}/dishes")
-    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
-        return dishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
+    public List<Dish> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam @Nullable LocalDate date) {
+        return (date == null) ? dishRepository.findAllByRestaurantId(restaurantId) : dishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 }
