@@ -23,6 +23,6 @@ public class UserRestaurantController {
 
     @GetMapping
     public List<Restaurant> getAllForDateWithDishes(@RequestParam(required = false) LocalDate date) {
-        return restaurantService.getAllForDateWithDishes(date);
+        return restaurantService.getAll(date);
     }
 }
