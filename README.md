@@ -31,8 +31,8 @@ Admin:
 - GET /rest/admin/users - get all users
 - GET /rest/admin/users/{userId} - get user by id
 - PUT /rest/admin/{userId} - update user by id
-- DELETE /rest/admin/{userId} - delete user profile by id
-- GET /rest/admin/users/byemail?email={email} - get user profile by email
+- DELETE /rest/admin/{userId} - delete user by id
+- GET /rest/admin/users/byemail?email={email} - get user by email
 
 #### Restaurant
 User:
