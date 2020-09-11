@@ -1,5 +1,3 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/918c5b39e61745bd9a09d3fffe0149ed)](https://www.codacy.com/manual/DavidZhar/voting-system?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DavidZhar/voting-system&amp;utm_campaign=Badge_Grade)
-
 # voting-system
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c67e316a97174ce9b197e16a8d7d5dde)](https://app.codacy.com/manual/DavidZhar/voting-system?utm_source=github.com&utm_medium=referral&utm_content=DavidZhar/voting-system&utm_campaign=Badge_Grade_Dashboard)
