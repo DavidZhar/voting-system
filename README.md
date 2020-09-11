@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/918c5b39e61745bd9a09d3fffe0149ed)](https://www.codacy.com/manual/DavidZhar/voting-system?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DavidZhar/voting-system&amp;utm_campaign=Badge_Grade)
+
 # voting-system
 
 Graduation project for https://github.com/JavaOPs/topjava  
