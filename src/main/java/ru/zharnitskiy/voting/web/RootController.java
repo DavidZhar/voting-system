@@ -14,7 +14,6 @@ import ru.zharnitskiy.voting.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,7 +29,7 @@ public class RootController {
 
     @GetMapping("/")
     public List<Restaurant> hello() {
-        return restaurantService.getAllWithDishes(LocalDate.now());
+        return restaurantService.getAllForToday();
     }
 
     @PostMapping("/register")
