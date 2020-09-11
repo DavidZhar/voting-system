@@ -30,7 +30,7 @@ public class RootController {
 
     @GetMapping("/")
     public List<Restaurant> hello() {
-        return restaurantService.getAll(LocalDate.now());
+        return restaurantService.getAllWithDishes(LocalDate.now());
     }
 
     @PostMapping("/register")

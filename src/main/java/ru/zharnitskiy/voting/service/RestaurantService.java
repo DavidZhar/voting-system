@@ -21,12 +21,8 @@ public class RestaurantService {
         return restaurantRepository.findById(id).orElseThrow(new NotFoundException("Restaurant is not found"));
     }
 
-    public List<Restaurant> getAll(LocalDate date) {
-        return (date == null) ? getAllWithDishes() : getAllForDateWithDishes(date);
-    }
-
-    public List<Restaurant> getAllWithDishes() {
-        return restaurantRepository.findAll();
+    public List<Restaurant> getAllWithDishes(LocalDate date) {
+        return (date == null) ? restaurantRepository.findAll() : getAllForDateWithDishes(date);
     }
 
     @Cacheable("restaurants")

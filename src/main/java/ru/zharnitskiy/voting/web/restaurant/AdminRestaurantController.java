@@ -49,6 +49,6 @@ public class AdminRestaurantController {
 
     @GetMapping
     public List<Restaurant> getAllForDateWithDishes(@RequestParam(required = false) LocalDate date) {
-        return restaurantService.getAll(date);
+        return restaurantService.getAllWithDishes(date);
     }
 }
