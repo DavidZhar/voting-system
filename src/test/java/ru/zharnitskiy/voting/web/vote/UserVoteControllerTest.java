@@ -1,13 +1,11 @@
 package ru.zharnitskiy.voting.web.vote;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.zharnitskiy.voting.model.Vote;
 import ru.zharnitskiy.voting.repository.VoteRepository;
-import ru.zharnitskiy.voting.service.VoteService;
 import ru.zharnitskiy.voting.web.AbstractControllerTest;
 
 import java.time.LocalTime;

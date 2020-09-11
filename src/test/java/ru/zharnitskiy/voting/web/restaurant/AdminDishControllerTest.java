@@ -9,8 +9,6 @@ import ru.zharnitskiy.voting.repository.DishRepository;
 import ru.zharnitskiy.voting.web.AbstractControllerTest;
 import ru.zharnitskiy.voting.web.json.JsonUtil;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

@@ -48,13 +48,4 @@ class RootControllerTest extends AbstractControllerTest {
 
         assertEquals(userRepository.getByEmail("user@mail.ru").getPassword(), "{noop}" + USER.getPassword());
     }
-
-//    @Test
-//    void createWithWrongFields() throws Exception {
-//        mockMvc.perform(post("/register")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(writeValue(MOCK_WRONG_USER)))
-//                .andDo(print())
-//                .andExpect(status().isBadRequest());
-//    }
 }
