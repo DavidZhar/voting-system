@@ -32,7 +32,7 @@ Admin:
 - GET /rest/admin/users/{userId} - get user by id
 - PUT /rest/admin/{userId} - update user by id
 - DELETE /rest/admin/{userId} - delete user profile by id
-- GET /rest/admin/users/by?email={email} - get user profile by email
+- GET /rest/admin/users/byemail?email={email} - get user profile by email
 
 #### Restaurant
 User:
