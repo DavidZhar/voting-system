@@ -14,12 +14,64 @@ Voting system for deciding where to have lunch.
     
  Stack: Java 8/Maven/REST/Spring MVC/Spring Security/Spring DATA JPA/Hibernate/HSQLDB
  
------------------------------
+_________________________
 
 ### REST API
+
+#### User
+Anonymous:
+- POST /register - register as a new user
+
+User:
+- GET /rest/profile - get profile
+- UPDATE /rest/profile - update profile
+- DELETE /rest/profile - delete profile
+
+Admin:
+- GET /rest/admin/users - get all users
+- GET /rest/admin/users/{userId} - get user by id
+- PUT /rest/admin/{userId} - update user by id
+- DELETE /rest/admin/{userId} - delete user profile by id
+- GET /rest/admin/users/by?email={email} - get user profile by email
+
+#### Restaurant
+User:
+- GET / - get all restaurants with dishes for today
+- GET /rest/restaurants - get all restaurants
+- GET /rest/restaurants/{restaurantId} - get restaurant by id
+- GET /rest/restaurants?date={date} - get restaurants with dishes for specific date
+
+Admin:
+- GET /rest/admin/restaurants - get all restaurants
+- POST /rest/admin/restaurants - create restaurant
+- PUT /rest/admin/restaurants/{restaurantId} - update restaurant by id
+- DELETE /rest/admin/restaurants/{restaurantId} - delete restaurant by id
+
+#### Dish
+Admin:
+- GET /rest/admin/restaurants/{restaurantId}/dishes - get all dishes by restaurant id
+- GET /rest/admin/restaurants/{restaurantId}/dishes/{dishId} - get dish by id
+- POST /rest/admin/restaurants/{restaurantId}dishes - create dish for restaurant
+- PUT /rest/admin/restaurants/{restaurantId}/dishes/{dishId} - update dish by id
+- DELETE /rest/admin/restaurants/{restaurantId}/dishes/{dishId} - delete dish by id
+
+#### Vote
+User:
+- POST /rest/votes - vote for a restaurant by id
+- PUT /rest/votes - change vote for another restaurant by id
+- GET /rest/votes - get authorized user's vote for today
+
+Admin:
+- GET /rest/admin/votes - get all votes
+- GET /rest/admin/votes/{voteId} - get vote by id
+- GET /rest/admin/votes?date={date} - get all votes for specific date
+- GET /rest/admin/votes/restaurant/{restaurantId}?date={date} - get all votes for specific restaurant and date
+
+_________________________
+### cURL examples
 (To use these cURL examples deploy the app to localhost:8080 with empty application context.)
 
-New users can register:  
+##### Register new user
 
 `curl -X POST -H "Content-Type: application/json" localhost:8080/register -d 
 '{
@@ -28,11 +80,38 @@ New users can register:
     "roles": ["USER"]
 }'`
 
-Admins can get, update and delete users:  
+_________________________
+#### Registered users can:
+
+##### Get profile
+
+`curl localhost:8080/rest/profile --user user@mail.ru:password`
+
+##### Update profile
+
+`curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/profile --user user@mail.ru:password -d
+'{
+    "email": "user@mail.ru",
+    "password": "updated",
+    "roles": ["ADMIN"]
+}'`
+
+##### Delete profile
+
+`curl -X DELETE localhost:8080/rest/profile --user user@mail.ru:password`
+
+_________________________
+#### Admins can:
+
+##### Get all users
 
 `curl localhost:8080/rest/admin/users --user admin@mail.ru:admin`
 
+##### Get user with id 100000
+
 `curl localhost:8080/rest/admin/users/100000 --user admin@mail.ru:admin`
+
+##### Update user with id 100000
 
 `curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/admin/users/100000 --user admin@mail.ru:admin -d
 '{
@@ -44,37 +123,44 @@ Admins can get, update and delete users:
         ]
 }'`
 
+##### Delete user with id 100000
+
 `curl -X DELETE localhost:8080/rest/admin/users/100000 --user admin@mail.ru:admin`
+
+##### Get user with email "user@mail.ru"
 
 `curl 'localhost:8080/rest/admin/users/byemail?email=user@mail.ru' --user admin@mail.ru:admin`
 
-Registered users can get, update and delete themselves:
+_________________________
+#### Registered users can:
 
-`curl localhost:8080/rest/profile --user user@mail.ru:password`
+##### Get all restaurants with dishes for today
 
-`curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/profile --user user@mail.ru:password -d
-'{
-    "email": "user@mail.ru",
-    "password": "updated",
-    "roles": ["ADMIN"]
-}'`
+`curl localhost:8080 --user user@mail.ru:password`
 
-`curl -X DELETE localhost:8080/rest/profile --user user@mail.ru:password`
-
-Users can get restaurants without dishes by id and also with dishes by date (with menu for that day):
+##### Get all restaurants
 
 `curl localhost:8080/rest/restaurants --user user@mail.ru:password`
 
+##### Get restaurant with id 100002
+
 `curl localhost:8080/rest/restaurants/100002 --user user@mail.ru:password`
+
+##### Get all restaurants with dishes for date "2020-02-02"
 
 `curl 'localhost:8080/rest/restaurants?date=2020-02-02' --user user@mail.ru:password`
 
-Admins can get, update and delete restaurants:
+_________________________
+#### Admins can:
+
+##### Create restaurant
 
 `curl -X POST -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants --user admin@mail.ru:admin -d
 '{
     "description": "Restaurant NEW"
 }'`
+
+##### Update restaurant with id 100002
 
 `curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants/100002 --user admin@mail.ru:admin -d 
 '{
@@ -82,11 +168,19 @@ Admins can get, update and delete restaurants:
     "description": "Restaurant1 UPDATED"
 }'`
 
+##### Delete restaurant with id 100002
+
 `curl -X DELETE localhost:8080/rest/admin/restaurants/100002 --user admin@mail.ru:admin`
 
-Admins can get, create, update and delete dishes for specific date and restarant:
+##### Get all dishes (dish history) for restaurant with id 100002
+
+`curl 'localhost:8080/rest/admin/restaurants/100002/dishes' --user admin@mail.ru:admin` 
+
+##### Get all dishes for restaurant with id 100002 for date "2020-01-01"
 
 `curl 'localhost:8080/rest/admin/restaurants/100002/dishes?date=2020-01-01' --user admin@mail.ru:admin` 
+
+##### Create dish for restaurant with id 100002 for date "2020-03-03"
 
 `curl -X POST -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants/100002/dishes --user admin@mail.ru:admin -d
 '{
@@ -94,6 +188,8 @@ Admins can get, create, update and delete dishes for specific date and restarant
     "price": 1000,
     "date": "2020-03-03"
 }'`
+
+##### Update dish with id 100004 for restaurant with id 100002
 
 `curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/admin/restaurants/100002/dishes/100004 --user admin@mail.ru:admin -d
 '{
@@ -103,34 +199,50 @@ Admins can get, create, update and delete dishes for specific date and restarant
     "date": "2020-03-03"
 }'`
 
+##### Delete dish with id 100006 for restaurant with id 100002
+
 `curl -X DELETE localhost:8080/rest/admin/restaurants/100002/dishes/100006 --user admin@mail.ru:admin`
 
-Users can vote for restaurant:
+_________________________
+#### Registered users can:
 
-`curl -X POST localhost:8080/rest/votes/ --user user@mail.ru:password -d
+##### Vote for restaurant with id 100002
+
+`curl -X POST -H "Content-Type: application/json" localhost:8080/rest/votes/ --user user@mail.ru:password -d
 '{
     "restaurant": {
         "id": 100002
     }
 }'`
 
-Users can change their vote (before 11:00):
+##### Change vote for restaurant with id 100003 (works before 11:00)
 
-`curl -X PUT localhost:8080/rest/votes/ --user user@mail.ru:password -d
+`curl -X PUT -H "Content-Type: application/json" localhost:8080/rest/votes/100003 --user user@mail.ru:password -d
 '{
     "restaurant": {
         "id": 100003
     }
 }'`
 
-Admins can get and delete votes by id and by restaurant/date:
+##### Get their vote for today
+
+`curl localhost:8080/rest/votes/ --user user@mail.ru:password`
+
+_________________________
+#### Admins can:
+
+##### Get all votes
 
 `curl localhost:8080/rest/admin/votes/ --user admin@mail.ru:admin`
 
+##### Get vote with id 100009
+
 `curl localhost:8080/rest/admin/votes/100009 --user admin@mail.ru:admin`
+
+##### Get all votes for date "2020-01-01"
 
 `curl 'localhost:8080/rest/admin/votes?date=2020-01-01' --user admin@mail.ru:admin`
 
-`curl 'localhost:8080/rest/admin/votes/restaurant/100002?date=2020-01-01' --user admin@mail.ru:admin`
+##### Get all votes for restaurant with id 100003 for date "2020-01-01"
 
-`curl -X DELETE localhost:8080/rest/admin/votes/ --user admin@mail.ru:admin`
+`curl 'localhost:8080/rest/admin/votes/restaurant/100002?date=2020-01-01' --user admin@mail.ru:admin`
