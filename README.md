@@ -1,5 +1,7 @@
 # voting-system
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c67e316a97174ce9b197e16a8d7d5dde)](https://app.codacy.com/manual/DavidZhar/voting-system?utm_source=github.com&utm_medium=referral&utm_content=DavidZhar/voting-system&utm_campaign=Badge_Grade_Dashboard)
+
 Graduation project for https://github.com/JavaOPs/topjava  
 
 Voting system for deciding where to have lunch.
